@@ -1,5 +1,5 @@
 ﻿namespace EasyNetQ.Migrations.Runner {
-    public class ExampleMigration : Migration {
+    public class ExampleMigration1 : Migration {
         public override void Apply() {
             Declare.Exchange("myExchange")
                 .AsType(ExchangeType.Topic)

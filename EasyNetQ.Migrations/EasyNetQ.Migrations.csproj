@@ -56,14 +56,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ExchangeDeleteAction.cs" />
+    <Compile Include="Actions\QueueDeleteAction.cs" />
     <Compile Include="ExchangeType.cs" />
     <Compile Include="IBindingDeclare.cs" />
     <Compile Include="IDeclare.cs" />
     <Compile Include="IDelete.cs" />
     <Compile Include="IExchangeDeclare.cs" />
+    <Compile Include="IExchangeDelete.cs" />
     <Compile Include="InvalidMigrationException.cs" />
     <Compile Include="IPurge.cs" />
     <Compile Include="IQueueDeclare.cs" />
+    <Compile Include="IQueueDelete.cs" />
     <Compile Include="Migration.cs" />
     <Compile Include="MigrationAction.cs" />
     <Compile Include="Actions\BindingDeclareAction.cs" />

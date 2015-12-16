@@ -2,10 +2,9 @@
     using System;
 
     public interface IDelete {
-        void User(String user);
-        void Exchange(String exchange);
-        void Exchange(Type messageType);
-        void Queue(String queue);
-        void Queue(Type messageType, String subscriptionId);
+        IExchangeDelete Exchange(String exchange);
+        IExchangeDelete Exchange(Type messageType);
+        IQueueDelete Queue(String queue);
+        IQueueDelete Queue(Type messageType, String subscriptionId);
     }
 }

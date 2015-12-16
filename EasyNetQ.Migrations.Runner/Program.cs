@@ -6,7 +6,7 @@
         static void Main(String[] args) {
             var managementClient = new ManagementClient("http://localhost", "guest", "guest");
 
-            var migration = new ExampleMigration();
+            var migration = new ExampleMigration2();
 
             migration.Run(managementClient);
         }
