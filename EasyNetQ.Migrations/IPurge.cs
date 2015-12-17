@@ -2,7 +2,7 @@
     using System;
 
     public interface IPurge {
-        void Queue(String queue);
-        void Queue(Type messageType, String subscriptionId);
+        IQueuePurge Queue(String queue);
+        IQueuePurge Queue(Type messageType, String subscriptionId);
     }
 }

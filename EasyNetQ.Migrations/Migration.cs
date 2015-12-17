@@ -4,11 +4,12 @@
     using EasyNetQ.Migrations.Actions;
     using EasyNetQ.Management.Client;
 
-    public abstract class Migration : IDeclare, IDelete {
+    public abstract class Migration : IDeclare, IDelete, IPurge {
         readonly List<MigrationAction> _actions = new List<MigrationAction>();
 
         public IDeclare Declare => this;
         public IDelete Delete => this;
+        public IPurge Purge => this;
 
         IBindingDeclare IDeclare.Binding() {
             var bindingDeclare = new BindingDeclareAction();
@@ -62,6 +63,18 @@
             var queueDelete = new QueueDeleteAction(messageType, subscriptionId);
             _actions.Add(queueDelete);
             return queueDelete;
+        }
+
+        IQueuePurge IPurge.Queue(String queue) {
+            var queuePurge = new QueuePurgeAction(queue);
+            _actions.Add(queuePurge);
+            return queuePurge;
+        }
+
+        IQueuePurge IPurge.Queue(Type messageType, String subscriptionId) {
+            var queuePurge = new QueuePurgeAction(messageType, subscriptionId);
+            _actions.Add(queuePurge);
+            return queuePurge;
         }
 
         public abstract void Apply();
