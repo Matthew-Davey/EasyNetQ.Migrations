@@ -6,9 +6,15 @@
         static void Main(String[] args) {
             var managementClient = new ManagementClient("http://localhost", "guest", "guest");
 
-            var migration = new ExampleMigration2();
+            var migration1 = new ExampleMigration1();
+            var migration2 = new ExampleMigration2();
 
-            migration.Run(managementClient);
+            migration1.Run(managementClient);
+
+            Console.WriteLine("Press any key to continue");
+            Console.Read();
+
+            migration2.Run(managementClient);
         }
     }
 }
