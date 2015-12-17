@@ -41,6 +41,11 @@
             return queueDeclare;
         }
 
+        void IDeclare.VirtualHost(string name) {
+            var virtualHostDeclare = new VirtualHostDeclareAction(name);
+            _actions.Add(virtualHostDeclare);
+        }
+
         IExchangeDelete IDelete.Exchange(String exchange) {
             var exchangeDelete = new ExchangeDeleteAction(exchange);
             _actions.Add(exchangeDelete);
@@ -63,6 +68,11 @@
             var queueDelete = new QueueDeleteAction(messageType, subscriptionId);
             _actions.Add(queueDelete);
             return queueDelete;
+        }
+
+        void IDelete.VirtualHost(string name) {
+            var virtualHostDelete = new VirtualHostDeleteAction(name);
+            _actions.Add(virtualHostDelete);
         }
 
         IQueuePurge IPurge.Queue(String queue) {

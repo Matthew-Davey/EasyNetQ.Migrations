@@ -2,6 +2,7 @@
     using System;
 
     public interface IDeclare {
+        void VirtualHost(String name);
         IExchangeDeclare Exchange(String name);
         IExchangeDeclare Exchange(Type messageType);
         IQueueDeclare Queue(String name);

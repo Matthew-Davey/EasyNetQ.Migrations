@@ -59,6 +59,8 @@
     <Compile Include="Actions\ExchangeDeleteAction.cs" />
     <Compile Include="Actions\QueueDeleteAction.cs" />
     <Compile Include="Actions\QueuePurgeAction.cs" />
+    <Compile Include="Actions\VirtualHostDeclareAction.cs" />
+    <Compile Include="Actions\VirtualHostDeleteAction.cs" />
     <Compile Include="ExchangeType.cs" />
     <Compile Include="IBindingDeclare.cs" />
     <Compile Include="IDeclare.cs" />
