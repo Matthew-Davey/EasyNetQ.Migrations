@@ -2,13 +2,20 @@
     [Migration(2)]
     public class ExampleMigration2 : Migration {
         public override void Apply() {
-            Delete.Queue("myQueue")
-                .OnVirtualHost("Test");
+            Declare.Exchange("myExchange")
+                .OnVirtualHost("Test")
+                .AsType(ExchangeType.Topic)
+                .Durable();
 
-            Delete.Exchange("myExchange")
-                .OnVirtualHost("Test");
+            Declare.Queue("myQueue")
+                .OnVirtualHost("Test")
+                .Durable();
 
-            Delete.VirtualHost("Test");
+            Declare.Binding()
+                .OnVirtualHost("Test")
+                .FromExchange("myExchange")
+                .ToQueue("myQueue")
+                .RoutingKey("#");
         }
     }
 }

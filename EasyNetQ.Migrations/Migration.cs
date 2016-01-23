@@ -29,6 +29,12 @@
             return exchangeDeclare;
         }
 
+        IPermissionDeclare IDeclare.Permission() {
+            var permissionDeclare = new PermissionDeclareAction();
+            _actions.Add(permissionDeclare);
+            return permissionDeclare;
+        }
+
         IQueueDeclare IDeclare.Queue(String name) {
             var queueDeclare = new QueueDeclareAction(name);
             _actions.Add(queueDeclare);

@@ -25,11 +25,9 @@
                     catch (Exception error) {
                         log.Error(error);
                     }
-                    Console.ReadKey();
                     return 0;
                 },
                 errors => {
-                    Console.ReadKey();
                     return 1;
                 }
             );

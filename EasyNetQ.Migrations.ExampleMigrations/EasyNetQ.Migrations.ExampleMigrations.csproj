@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ExampleMigration1.cs" />
     <Compile Include="ExampleMigration2.cs" />
+    <Compile Include="ExampleMigration3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

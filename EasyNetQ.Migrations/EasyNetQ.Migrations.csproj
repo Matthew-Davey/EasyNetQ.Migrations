@@ -60,6 +60,7 @@
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Actions\ExchangeDeleteAction.cs" />
+    <Compile Include="Actions\PermissionDeclareAction.cs" />
     <Compile Include="Actions\QueueDeleteAction.cs" />
     <Compile Include="Actions\QueuePurgeAction.cs" />
     <Compile Include="Actions\VirtualHostDeclareAction.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="IExchangeDeclare.cs" />
     <Compile Include="IExchangeDelete.cs" />
     <Compile Include="InvalidMigrationException.cs" />
+    <Compile Include="IPermissionDeclare.cs" />
     <Compile Include="IPurge.cs" />
     <Compile Include="IQueueDeclare.cs" />
     <Compile Include="IQueueDelete.cs" />

@@ -60,7 +60,7 @@
 
         protected internal override void VerifyState() {
             if (String.IsNullOrWhiteSpace(VirtualHost))
-                throw new InvalidOperationException("VirtualHost name cannot be null, empty, or whitespace.");
+                throw new InvalidMigrationException("VirtualHost name cannot be null, empty, or whitespace.");
 
             if (String.IsNullOrWhiteSpace(FromExchange))
                 throw new InvalidMigrationException("FromExchange cannot be null, empty, or whitespace.");
