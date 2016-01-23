@@ -1,20 +1,83 @@
 ﻿namespace EasyNetQ.Migrations.Runner {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
     using EasyNetQ.Management.Client;
+    using CommandLine;
+    using NLog;
 
-    class Program {
-        static void Main(String[] args) {
-            var managementClient = new ManagementClient("http://localhost", "guest", "guest");
+    static class Program {
+        static Int32 Main(String[] args) {
+            var log = LogManager.GetCurrentClassLogger();
 
-            var migration1 = new ExampleMigration1();
-            var migration2 = new ExampleMigration2();
+            var result = Parser.Default.ParseArguments<Options>(args);
+            return result.MapResult(
+                options => {
+                    try {
+                    ExecuteMigrations(options);
+                    }
+                    catch (Exception error) {
+                        log.Error(error);
+                    }
+                    Console.ReadKey();
+                    return 0;
+                },
+                errors => {
+                    Console.ReadKey();
+                    return 1;
+                }
+            );
+        }
 
-            migration1.Run(managementClient);
+        static void ExecuteMigrations(Options options) {
+            var managementClient = new ManagementClient(options.HostUrl, options.Username, options.Password, options.Port);
 
-            Console.WriteLine("Press any key to continue");
-            Console.Read();
+            Assembly.LoadFrom(options.MigrationsAssemblyPath)
+                .ScanForMigrationTypes()
+                .VerifyVersionAttributes()
+                .SkipBelowVersion(options.Version)
+                .OrderByVersion()
+                .InstantiateMigrations()
+                .ToList()
+                .ForEach(migration => migration.Run(managementClient));
+        }
 
-            migration2.Run(managementClient);
+        static IEnumerable<Type> ScanForMigrationTypes(this Assembly assembly) {
+            return assembly.GetTypes()
+                .Where(typeof(Migration).IsAssignableFrom)
+                .Where(type => !type.IsAbstract)
+                .Where(type => !type.IsInterface);
+        }
+
+        static IEnumerable<Type> VerifyVersionAttributes(this IEnumerable<Type> migrationTypes) {
+            var missingAttributes = migrationTypes.Where(type => type.GetCustomAttribute<MigrationAttribute>() == null);
+
+            if (missingAttributes.Any()) {
+                var exceptions = missingAttributes.Select(type => new Exception($"Type '{type.FullName}' is missing MigrationAttribute declaration."));
+                throw new AggregateException("One or more migration types is missing MigrationAttribute declaration.", exceptions);
+            }
+
+            return migrationTypes;
+        }
+
+        static IEnumerable<Type> SkipBelowVersion(this IEnumerable<Type> migrationTypes, Int64 version) {
+            return migrationTypes.Where(type => {
+                var versionAttribute = type.GetCustomAttribute<MigrationAttribute>();
+                return versionAttribute.Version >= version;
+            });
+        }
+
+        static IOrderedEnumerable<Type> OrderByVersion(this IEnumerable<Type> migrationTypes) {
+            return migrationTypes.OrderBy(type => {
+                var versionAttribute = type.GetCustomAttribute<MigrationAttribute>();
+                return versionAttribute.Version;
+            });
+        }
+
+        static IEnumerable<Migration> InstantiateMigrations(this IEnumerable<Type> migrationTypes) {
+            return migrationTypes.Select(Activator.CreateInstance)
+                .Cast<Migration>();
         }
     }
 }

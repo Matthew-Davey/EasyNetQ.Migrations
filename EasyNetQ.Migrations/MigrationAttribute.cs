@@ -3,9 +3,9 @@
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class MigrationAttribute : Attribute {
-        public UInt64 Version { get; set; }
+        public Int64 Version { get; set; }
 
-        public MigrationAttribute(UInt64 version) {
+        public MigrationAttribute(Int64 version) {
             Version = version;
         }
     }
