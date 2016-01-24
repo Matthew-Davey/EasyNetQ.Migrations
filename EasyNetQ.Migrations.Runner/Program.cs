@@ -73,7 +73,14 @@
                 .OrderByVersion()
                 .InstantiateMigrations()
                 .ToList()
-                .ForEach(migration => migration.Run(managementClient));
+                .ForEach(migration => {
+                    if (options.DryRun) {
+                        migration.DryRun();
+                    }
+                    else {
+                        migration.Run(managementClient);
+                    }
+                });
         }
 
         static IEnumerable<Type> ScanForMigrationTypes(this Assembly assembly) {
@@ -97,7 +104,7 @@
         static IEnumerable<Type> SkipBelowVersion(this IEnumerable<Type> migrationTypes, Int64 version) {
             return migrationTypes.Where(type => {
                 var versionAttribute = type.GetCustomAttribute<MigrationAttribute>();
-                return versionAttribute.Version >= version;
+                return versionAttribute.Version > version;
             });
         }
 

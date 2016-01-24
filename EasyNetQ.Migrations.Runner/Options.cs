@@ -18,10 +18,13 @@
         [Value(0, Required = true, HelpText = "Path to the assembly containing the migrations.")]
         public String MigrationsAssemblyPath { get; set; }
 
-        [Option('v', "version", Default = 0, HelpText = "Migrations version number. Any migrations in the assembly with a version number greater than or equal to this parameter will be applied.")]
+        [Option('v', "version", Default = 0, HelpText = "Migrations version number. Any migrations in the assembly with a version number greater than this parameter will be applied.")]
         public Int64 Version { get; set; }
 
         [Option('l', "logfile", Required = false, HelpText = "Log output to file.")]
         public String LogFilePath { get; set; }
+
+        [Option('d', "dryrun", Default = false, HelpText = "Execute migration as a dry run. No changes will be made to your broker.")]
+        public Boolean DryRun { get; set; }
     }
 }

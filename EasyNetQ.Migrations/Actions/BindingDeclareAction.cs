@@ -75,6 +75,13 @@
                 throw new InvalidMigrationException("Must specify either ToExchange or ToQueue.");
         }
 
+        protected internal override void DryRun() {
+            var destinationName = ToQueueDeclared ? ToQueue : ToExchange;
+
+            _log.Info($"Declaring binding from '{FromExchange}' to '{destinationName}'");
+            _log.Info($"    RoutingKey = {RoutingKey}");
+        }
+
         protected internal override void Apply(IManagementClient managementClient) {
             var destinationName = ToQueueDeclared ? ToQueue : ToExchange;
 

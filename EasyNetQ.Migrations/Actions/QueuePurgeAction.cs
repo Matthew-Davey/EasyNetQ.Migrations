@@ -30,6 +30,10 @@
                 throw new InvalidMigrationException("VirtualHost name cannot be null, empty, or whitespace.");
         }
 
+        protected internal override void DryRun() {
+            _log.Info($"Purging queue '{Name}' on '{VirtualHost}'");
+        }
+
         protected internal override void Apply(IManagementClient managementClient) {
             _log.Info($"Purging queue '{Name}' on '{VirtualHost}'");
 

@@ -65,6 +65,18 @@
                 throw new InvalidMigrationException("Exchange type is not a valid value.");
         }
 
+        protected internal override void DryRun() {
+            _log.Info($"Declaring exchange '{Name}' on '{VirtualHost}'");
+            _log.Info($"    Type = {Type}");
+            _log.Info($"    AutoDelete = {AutoDelete}");
+            _log.Info($"    Durable = {Durable}");
+            _log.Info($"    Internal = {Internal}");
+
+            if (AlternateExchangeDeclared) {
+                _log.Info($"    AlternateExchange = {AlternateExchange}");
+            }
+        }
+
         Boolean AlternateExchangeDeclared => !String.IsNullOrWhiteSpace(AlternateExchange);
 
         protected internal override void Apply(IManagementClient managementClient) {

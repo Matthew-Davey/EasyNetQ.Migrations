@@ -51,6 +51,13 @@
                 throw new InvalidMigrationException("VirtualHost name cannot be null, empty, or whitespace.");
         }
 
+        protected internal override void DryRun() {
+            _log.Info($"Declaring permission for user '{User}' on vhost '{VirtualHost}'");
+            _log.Info($"    Read Regex = {ReadRegex}");
+            _log.Info($"    WriteRegex = {WriteRegex}");
+            _log.Info($"    ConfigureRegex = {ConfigureRegex} ");
+        }
+
         protected internal override void Apply(IManagementClient managementClient) {
             _log.Info($"Declaring permission for user '{User}' on vhost '{VirtualHost}'");
             _log.Info($"    Read Regex = {ReadRegex}");

@@ -30,6 +30,10 @@
                 throw new InvalidMigrationException("VirtualHost name cannot be null, empty, or whitespace.");
         }
 
+        protected internal override void DryRun() {
+            _log.Info($"Deleting queue '{Name}' from '{VirtualHost}'");
+        }
+
         protected internal override void Apply(IManagementClient managementClient) {
             _log.Info($"Deleting queue '{Name}' from '{VirtualHost}'");
 
