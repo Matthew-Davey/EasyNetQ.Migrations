@@ -5,7 +5,7 @@ Declare your vhosts, exchanges &amp; queues in C# using a fluent interface.
 
 ### Getting Started
 * Install the latest version of EasyNetQ.Migrations from NuGet - `Install-Package EasyNetQ.Migrations`
-* Declare your migrations somewhere inside your projecty.
+* Declare your migrations somewhere inside your project.
 * Migrations must have an incremental version number (it could also be a unix timestamp).
 ```
 namespace MyProject.RabbitMigrations {
