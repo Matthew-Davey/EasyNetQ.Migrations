@@ -104,7 +104,7 @@
         static IEnumerable<Type> SkipBelowVersion(this IEnumerable<Type> migrationTypes, Int64 version) {
             return migrationTypes.Where(type => {
                 var versionAttribute = type.GetCustomAttribute<MigrationAttribute>();
-                return versionAttribute.Version >= version;
+                return versionAttribute.Version > version;
             });
         }
 
