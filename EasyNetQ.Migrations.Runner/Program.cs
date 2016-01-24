@@ -73,7 +73,14 @@
                 .OrderByVersion()
                 .InstantiateMigrations()
                 .ToList()
-                .ForEach(migration => migration.Run(managementClient));
+                .ForEach(migration => {
+                    if (options.DryRun) {
+                        migration.DryRun();
+                    }
+                    else {
+                        migration.Run(managementClient);
+                    }
+                });
         }
 
         static IEnumerable<Type> ScanForMigrationTypes(this Assembly assembly) {

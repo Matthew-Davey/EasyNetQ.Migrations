@@ -101,5 +101,12 @@
             _actions.ForEach(action => action.VerifyState());
             _actions.ForEach(action => action.Apply(managementClient));
         }
+
+        public void DryRun() {
+            Apply();
+
+            _actions.ForEach(action => action.VerifyState());
+            _actions.ForEach(action => action.DryRun());
+        }
     }
 }

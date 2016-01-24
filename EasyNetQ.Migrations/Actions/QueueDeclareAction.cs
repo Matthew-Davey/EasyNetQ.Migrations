@@ -94,6 +94,34 @@
                 throw new InvalidMigrationException("VirtualHost name cannot be null, empty, or whitespace.");
         }
 
+        protected internal override void DryRun() {
+            _log.Info($"Declaring queue '{Name}' on '{VirtualHost}'");
+            _log.Info($"    AutoDelete = {AutoDelete}");
+            _log.Info($"    Durable = {Durable}");
+
+            if (MessageTTLDeclared) {
+                _log.Info($"    MessageTTL = {MessageTTL}");
+            }
+            if (AutoExpireDeclared) {
+                _log.Info($"    AutoExpire = {AutoExpire}");
+            }
+            if (MaxLengthDeclared) {
+                _log.Info($"    MaxLength = {MaxLength}");
+            }
+            if (MaxLengthBytesDeclared) {
+                _log.Info($"    MaxLengthBytes = {MaxLengthBytes}");
+            }
+            if (DLXDeclared) {
+                _log.Info($"    DeadLetterExchange = {DeadLetterExchange}");
+            }
+            if (DLXRoutingKeyDeclared) {
+                _log.Info($"    DeadLetterRoutingKey = {DeadLetterRoutingKey}");
+            }
+            if (MaxPriorityDeclared) {
+                _log.Info($"    MaxPriority = {MaximumPriority}");
+            }
+        }
+
         protected internal override void Apply(IManagementClient managementClient) {
             _log.Info($"Declaring queue '{Name}' on '{VirtualHost}'");
             _log.Info($"    AutoDelete = {AutoDelete}");

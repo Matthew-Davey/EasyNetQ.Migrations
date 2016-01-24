@@ -23,5 +23,8 @@
 
         [Option('l', "logfile", Required = false, HelpText = "Log output to file.")]
         public String LogFilePath { get; set; }
+
+        [Option('d', "dryrun", Default = false, HelpText = "Execute migration as a dry run. No changes will be made to your broker.")]
+        public Boolean DryRun { get; set; }
     }
 }

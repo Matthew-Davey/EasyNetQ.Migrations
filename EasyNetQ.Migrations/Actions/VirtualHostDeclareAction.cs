@@ -16,6 +16,10 @@
                 throw new InvalidMigrationException("Name cannot be null, empty, or whitespace");
         }
 
+        protected internal override void DryRun() {
+            _log.Info($"Declaring vhost '{Name}'");
+        }
+
         protected internal override void Apply(IManagementClient managementClient) {
             _log.Info($"Declaring vhost '{Name}'");
             managementClient.CreateVirtualHost(Name);
