@@ -60,6 +60,8 @@ And then run them with the included migration runner!
 EasyNetQ.Migrations.Runner.exe -hostUrl localhost -username guest -password guest MyProject.RabbitMigrations.dll
 ```
 
+_The migrations runner is located in the 'tools' folder of the Nuget package._
+
 Outputs:
 ```
 21:47:14.3068 Declaring vhost 'Test'
