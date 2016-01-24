@@ -90,6 +90,11 @@ Outputs:
 21:47:15.6974 Finished Deleting vhost 'Test'
 
 ```
+Successive migrations should be executed with the `-version ###` switch. In this case only migrations with a version number _greater than_ the specified value will be applied.
+
+You can also add the `-dryrun` switch. In this case `EasyNetQ.Migrations.Runner` will log its actions but will not make any changes to your RabbitMQ broker.
+
+
 ### Building from source
 * Requires Ruby v2.1.7 (not compatible with 2.2.3). If you need to run multiple Ruby versions use RVM (https://rvm.io/). On Windows use RubyInstaller (http://rubyinstaller.org/)
 * Requires Bundler (http://bundler.io/) `gem install bundler`
